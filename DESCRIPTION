@@ -1,0 +1,22 @@
+Package: alaplot
+Version: 0.1
+Date: 2021-01-06
+Title: ALA style for ggplot charts
+Authors@R: c(person("Matilda", "Stevenson", email = "matilda.stevenson@csiro.au",
+                  role = c("aut", "cre")))
+Description: Theme for creating ggplot charts in the ALA style. Uses ALA colours,
+    fonts, and optionally adds ALA logo to final plot.
+Depends: R (>= 3.1.0)
+Imports: 
+    ggplot2,
+    ggtext,
+    magick,
+    grid
+Suggests:
+   dplyr,
+   ALA4R,
+   lubridate
+License: GPL-3
+LazyData: true
+RoxygenNote: 7.1.1
+Encoding: UTF-8
