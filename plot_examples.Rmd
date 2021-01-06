@@ -1,0 +1,59 @@
+---
+title: "ala-plot examples"
+author: "Matilda Stevenson"
+date: '`r Sys.Date()`'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ala-plot examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(lubridate)
+library(ALA4R)
+library(ggplot2)
+library(dplyr)
+library(alaplot)
+options(width=120)
+```
+
+## Download data for plots
+```{r}
+occ <- ala_occurrences(taxon_id = ala_taxa("Polytelis swainsonii"),
+                       columns = ala_columns(group = "basic",
+                                             extra  = c('stateProvince',
+                                                        'basisOfRecord')))
+```
+
+## Simple plot
+`ala_style()` adds the basic ala fonts and layout to a plot
+The title and axes labels recognise markdown. 
+```{r}
+plt <- ggplot(occ %>% filter(stateProvince == "Australian Capital Territory")) +
+  geom_point(mapping = aes(x = decimalLatitude, y = decimalLongitude)) +
+  ggtitle("*Polytelis swainsonii* occurrences") + ala_style()
+plt
+```
+
+## Bar chart
+```{r}
+data <- occ %>% filter(!(eventDate == "")) %>%
+  mutate(year = year(eventDate)) %>% filter(year > 1999)
+
+plt <- ggplot(data) +
+  geom_histogram(mapping = aes(x = year), stat = "bin",
+                              binwidth = 1,
+                              colour = ala_colours$black,
+                              fill = ala_colours$flamingo) +
+  ala_style() + ggtitle("*Polytelis swainsonii* records from 2000 to 2020")
+
+plt
+```
+
+## Finalising a plot
+Once a plot is ready, use `finalise_plot()` to add the ALA logo and save the plot.
+```{r}
+finalise_plot(plt, filename = 'finished_plot.png')
+```
