@@ -21,19 +21,26 @@ options(width=120)
 
 ## Download data for plots
 ```{r}
-occ <- ala_occurrences(taxon_id = ala_taxa("Polytelis swainsonii"),
+occ <- ala_occurrences(taxon_id = ala_taxa(c("Polytelis swainsonii",
+                                                    "Polytelis anthopeplus")),
                        columns = ala_columns(group = "basic",
                                              extra  = c('stateProvince',
-                                                        'basisOfRecord')))
+                                                        'basisOfRecord',
+                                                        'species')))
+
+
 ```
 
 ## Simple plot
 `ala_style()` adds the basic ala fonts and layout to a plot
 The title and axes labels recognise markdown. 
 ```{r}
-plt <- ggplot(occ %>% filter(stateProvince == "Australian Capital Territory")) +
-  geom_point(mapping = aes(x = decimalLatitude, y = decimalLongitude)) +
-  ggtitle("*Polytelis swainsonii* occurrences") + ala_style()
+plt <- ggplot(occ) +
+  geom_point(mapping = aes(x = decimalLongitude, y = decimalLatitude,
+                           colour = species)) +
+  ggtitle("*Polytelis swainsonii* and *Polytelis  
+  anthopeplus* occurrences") + ala_style() +
+  scale_color_manual(values = c(ala_colours$flamingo, ala_colours$silver))
 plt
 ```
 
