@@ -5,7 +5,7 @@
 
 ala_style <- function() {
   theme(
-    plot.title = element_markdown(family = "Lato", face = "bold", hjust = 0.5),
+    plot.title = element_markdown(family = "Lato", face = "bold", size = 12, hjust = 0.5, ),
     axis.title = element_text(family = "Roboto"),
     panel.background = element_blank(),
     axis.line = element_line(colour = "black")
@@ -21,6 +21,7 @@ ala_colours <- list(yellow = "#FFC861",
                     rust = "#C44D34",
                     gray = "#637073",
                     silver = "#9D9D9D",
+                    concrete = "#F2F2F2",
                     violet = "#2E358B",
                     black = "#212121")
 
